@@ -57,20 +57,19 @@ var questions = [{
   
  
 var remainQuestions = questions.length;
-var listOfQuestions=display();
+var listOfQuestions= displayImagesAndQuestions();
 $('body').append(listOfQuestions);
-//alert( $("#1").attr("id") );
-display2();
+setQuestionsPositions();
 displayMessage();
 
 
 function displayMessage()
-{
-  $("#mesaj").html("Iepurasului ii este foame.Il ajuti sa manance tot?").show().delay(3000).fadeOut();
-$("#mesaj").addClass("warning");
-}
- function display()
  {
+  $("#mesaj").html("Iepurasului ii este foame.Il ajuti sa manance tot?").show().delay(3000).fadeOut();
+  $("#mesaj").addClass("warning");
+ }
+function displayImagesAndQuestions()
+{
         var output="";
         var aux;
         for(var j = 0 ; j< questions.length; j++)
@@ -81,7 +80,7 @@ $("#mesaj").addClass("warning");
         return output;
 }
 
-  function display2()
+  function setQuestionsPositions()
   {
           for(var j = 0; j<questions.length; j++)
         {
@@ -92,13 +91,13 @@ $("#mesaj").addClass("warning");
         }
   }
 
-  $(".question").on('click',function(e)
+$(".question").on('click',function(e)
   {
        $("#mesaj").removeClass("warning");
        $("#mesaj").html("");
        previousQuestion=currentQuestion;
        currentQuestion=$(this).attr('id');
-      $("#t"+currentQuestion).addClass("currentQuestion");
+       $("#t"+currentQuestion).addClass("currentQuestion");
       var isVisible = $('#'+previousQuestion).is(':visible');
          if (isVisible== true && currentQuestion!=previousQuestion)
                $("#t"+previousQuestion).removeClass("currentQuestion");
