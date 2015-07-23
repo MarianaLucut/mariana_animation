@@ -1,28 +1,44 @@
 
 .question {
-    width:15%;
+	 position: absolute;
+    max-width:30%;
+    /*width:100%;*/
+    height:20%;
     font-size:100%;
 
 }
 .textBox{
 	width: 30%;
 }
-.question.padding
-{
-	padding-right: 25px;
-    padding-left: 25px;
+html, body {
+    background: url("../images/nature2.png")no-repeat scroll 0 0 / 100% 100% transparent !important;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
-body
+
+/*
+html { 
+background: url(../images/nature2.png) no-repeat center center fixed; 
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+}*/
+/*body {
+		overflow-x: hidden;
+	}*/
+/*body
 {
-/*background-image :url("../images/nature2.png");*/
+/*/*background-image :url("../images/nature2.png");*/
 background-size:100%;
 position:absolute;
 max-width:800px;
 min-height:800px;
 width:100%;
-height:100%;	
-}
-
+height:auto;	
+}*/
+*/
 .inputStyle
 { width:20px;
 }
@@ -35,8 +51,11 @@ height:100%;
  /*top: 600px;
  left: 1000px;*/
 }
-img {
-    max-width: 100%;
+.img-responsive{
+/*	position: absolute;*/
+	max-width: 20%;
+	max-height:20%;
+  /*  max-width: 100%;*/
 }
 #imageCarrot
 {
@@ -51,7 +70,6 @@ height:50px;
 position: absolute;
   top: 80px;
  left: 120px;
-
 }
 #house
 {
@@ -60,21 +78,24 @@ height:80px;
 position: absolute;
   top: 50px;
  left: 50px;
-
 }
 #mesaj
 	 {position: absolute;
-	 top: 50px;
-	 left:70%;
+	 top: 5%;
+	 left:40%;
+	 font-size :70%;
 	 border-radius: 25px;
 	 padding: 20px; 
-	 width: 300px;
-	 height: 100px;
+	 width: 20%;
+	 height: 10%;
 }
-
 .tableQuestions{
 	 border: 1px solid black;
 	 background-color:#F5A9F2;
+     width:120px;
+    padding-right: 15px;
+    padding-left: 15px;
+
 }
 .error {
 	background:#ffecec url('../images/error.png') no-repeat 20px 60%;
@@ -108,7 +129,7 @@ position: absolute;
 
 #container
 {
-	width:1200px;
+	width:100%;
 	margin:0px auto;
 }
 @media only screen and (max-device-width:1400px){
@@ -117,26 +138,32 @@ position: absolute;
 	height:auto;}
 .question
 { width:90px;}
-.tableQuestions
-{
-width:30%;
-    padding-right: 15%;
-    padding-left: 15%;
+
+/*.img-responsive{
+  max-width:100%;
+  /*height:50%;*/
+}*/
 }
-img{
-  width:100%;
-  height:100%;
-}
-}
-@media only screen and (max-device-width:640px){
+@media screen and (max-device-width:640px){
 #container{
-width:50%;
- height:auto;
+max-width:100%;
+ max-height:auto;
 	}
+/*.img-responsive{
+  max-width:100%;
+  max-height:20%;
+  /*height:auto;*/
+}*/
 }
 @media only screen and (max-device-width:360px){
 #container{
-	width:320px;
+	width:100%;
+	max-height:100%;
 }
+/*.img-responsive{
+  max-width:100%;
+  max-height:auto;
+  /*height:auto;*/
+}*/
 }
 
