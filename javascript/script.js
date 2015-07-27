@@ -56,12 +56,13 @@ var currentQuestion =0;
 var previousQuestion= 0;
 var remainQuestions = questions.length;
 var listOfQuestions= displayImagesAndQuestions();
-var w = window.innerWidth;
-var h = window.innerHeight;
+var win = window.innerWidth;
+var hin = window.innerHeight;
 var topRabbitValue=60;
 var leftRabbitValue=60;
 var ok=0;
 $('body').append(listOfQuestions);
+// $('.img-responsive').css('width','120px');
 setQuestionsPositions();
 displayStartMessage();
 displayImage();
@@ -71,6 +72,15 @@ $(window).resize(function()
 {
 setQuestionsPositions();
 setRabbitPosition();
+$('.images').css('width',($(window).width()*0.3)+'px');
+// $('#rabbitGame').css('width',($(window).width()*0.3)+'px');
+$('#mesaj').css('font-size',($(window).width()/2*0.02)+'px');
+
+$('.tableQuestions').css('font-size',($(window).width()/2*0.015)+'px');
+$('.tableQuestions').css('width',($(window).width()*0.1)+'px');
+
+// $('#imageCarrot').css('height',($(window).height()*10)+'px');
+
   });
 
 function displayImage()
@@ -96,8 +106,8 @@ function setRabbitPosition()
   else
    {
     var auxiliarVariable = $("#"+currentQuestion).offset();
-     newPos.left=auxiliarVariable.left+100;
-     newPos.top = auxiliarVariable.top+50;
+     newPos.left=auxiliarVariable.left-5/win*w;
+     newPos.top = auxiliarVariable.top+100/hin*h;
      $("#rabbitGame").offset(newPos);
    }
 }
@@ -114,7 +124,7 @@ function displayImagesAndQuestions()
      var aux;
      for(var j = 0 ; j< questions.length; j++)
        { //output+='<div class="question" id="'+(+j)+'"><table ><tr><td><img id="imageCarrot" class="img-responsive" src="images/carrot.png"></td></tr> <tr><table id="t'+j+'" class="tableQuestions"><td>'+questions[j].question+'<input type="text" class="inputStyle" id="input'+j+'" name="answer"></input></td></table></tr></table></div>';
-         output+='<div class="question" id="'+( + j )+'"><div><img class="img-responsive" id="imageCarrot" src="images/carrot.png"></div><div id="t'+j+'" class="tableQuestions">'+questions[j].question+'<input class="textBox" type="text" class="inputStyle" id="input'+j+'" name="answer"></input></div></div>';
+         output+='<div class="question" id="'+( + j )+'"><div class="images"><img class="img-responsive" type="image" id="imageCarrot" src="images/carrot.png"></div><div id="t'+j+'" class="tableQuestions">'+questions[j].question+'<input class="textBox" type="text" class="inputStyle" id="input'+j+'" name="answer"></input></div></div>';
         }
      return output;
 }
