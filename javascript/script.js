@@ -18,7 +18,7 @@ var questions = [{
     },{
   question:"4)20-7= ",
   answer:13,
-    topValue:8,
+    topValue:60,
     leftValue:50
     },{
   question:"5)10+8= ",
