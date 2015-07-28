@@ -1,11 +1,11 @@
 
 .question {
-	 position: absolute;
+  position: absolute;
   max-width:20%;
-  min-width:20%;
-  width: 50%;
-    height:20%;
-    font-size:80%;
+  width: 40%;
+  height:20%;
+  font-size:80%;
+
 
 }
 div{
@@ -13,34 +13,27 @@ div{
 }
 .textBox{
 	width: 30%;
+	left:50%;
+	text-align:center;
+    margin: 0 auto;
+}
+div#nou{
+	margin: 0 auto;
+	  left: 50%;
+	  text-align:center;
+	
 }
 html, body {
     background: url("../images/nature2.png")no-repeat scroll 0 0 / 100% 100% transparent !important;
+    width:100%;  /*adaugat recent*/
     height: 100%;
     margin: 0;
     padding: 0;
-    	overflow:hidden;
-}
-
-/*.inputStyle
-{ width:20px;
-}*/
-#rabbitGame
-{
- opacity: 1.0;
- width: 20%;
- height:20%;
-
+    overflow:hidden;
 }
 .img-responsive{
 	max-width: 20%;
 	max-height:20%;
-}
-#imageCarrot
-{
-/*max-width: 80px;
-width: 100%;
-height:80px;*/
 }
 #rabbit
 {
@@ -55,14 +48,14 @@ position: absolute;
 width: 80px;
 height:80px;
 position: absolute;
-  top: 0px;
- left: 50px;
+top: 0px;
+left: 50px;
 }
 #mesaj
 	 {position: absolute;
 	 top: 5%;
 	 left:40%;
-	 font-size :100%;
+	 font-size :80%;
 	 border-radius: 25px;
 	 padding: 20px; 
 	 width: 20%;
@@ -72,9 +65,10 @@ position: absolute;
 	 border: 1px solid black;
 	 background-color:#F5A9F2;
      width:30%;
-    padding-right: 1px;
-    padding-left: 1px;
-    	overflow:hidden;
+     padding-right: 1px;
+     padding-left: 1px;
+     overflow:hidden;
+
 
 }
 .error {
@@ -123,29 +117,26 @@ div.question{
 
 
 }
-@media screen and (max-device-width:765px){
+@media screen and (max-width:765px){
 #container{
-max-width:100%;
- max-height:auto;
+width:100%;
+height:auto;
 	}
-  .tableQuestions{font-size: 16px;}
-
-
 #rabbitGame
 {
  opacity: 1.0;
- width: 100%;
- height:100%;
+ max-width: 50%;
+ max-height:100%;
 
 }
 }
+
 @media only screen and (max-device-width:360px){
 #container{
-	max-height:100%;
+	height:100%;
 	width:100%;
 	
 }
- .tableQuestions{font-size: 12px;}
 
 }
 
