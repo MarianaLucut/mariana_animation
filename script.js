@@ -52,7 +52,7 @@ var questions = [{
 
 var currentQuestion =0;
 var previousQuestion= 0;
-
+var remainQuestions = questions.length;
 
 var win = window.innerWidth;
 var hin = window.innerHeight;
@@ -64,43 +64,45 @@ var maximTop;
 var anotherQuestion= 0;
 var code;
  var idQuestion;
- var ok2;
 
+var AVATAR_HELP_TITLE_MESSAGE = "Ajutor";
+var AVATAR_HELP_CONTENT_MESSAGE = "Ținând butonul mouse-ului apăsat, ordonează crescător numerele de pe etichete pentru a afla câte scufundări au făcut copiii.";
 
 (function()
 {
 var listOfQuestions= displayImagesAndQuestions();
 $('body').append(listOfQuestions);
-var remainQuestions = questions.length;
 setQuestionsPositions();
 displayStartMessage();
 displayImage();
 displayPageElements();
-var w = window.innerWidth;
-var h = window.innerHeight;
 $(window).on('resize',displayPageElements);
+$("#mesaj").hide();
+  showAvatarHelpFirst("", AVATAR_HELP_CONTENT_MESSAGE, ""); 
 
 function displayPageElements()
-{   if ($(window).width()> 1500)
+{   if ($(window).width()>1500)
       {
-          maximLeft = 140;
+          maximLeft = 0;
           maximTop = -10;
       }
     if ( $(window).width()< 1500 && $(window).width()> 800 )
       {
-          maximLeft = 90;
+          maximLeft = 0;
           maximTop = 10;
       }
-    if ( $(window).width()< 800)
+    if ( $(window).width() < 800 )
        {
-          maximLeft = 50;
-          maximTop=40;
+          maximLeft = 0;
+          maximTop=0;
        }
     setRabbitPosition();
     setQuestionsPositions();
-    $('.images').css('width',($(window).width()*0.3)+'px');
-    $('#rabbitGame').css('width',($(window).width()/1.5*0.07)+'px');
-    $('.tableQuestions').css('width',($(window).width()*0.07)+'px');
+    // $('.images').css('width',($(window).width()*0.3)+'px');
+    // //$('#rabbitGame').css('width',($(window).width()/1.5*0.07)+'px');
+    // // // $('#mesaj').css('font-size',($(window).width()/3*0.03)+'px');
+    // // // $('.tableQuestions').css('font-size',($(window).width()/2*0.015)+'px');
+    // $('.tableQuestions').css('width',($(window).width()*0.07)+'px');
  }
 
 function displayImage()
@@ -117,16 +119,16 @@ function setRabbitPosition()
   
   if(ok == 0)
    {
-     newPos.left = leftRabbitValue*w/100;
-     newPos.top = topRabbitValue*h/100;
+     newPos.left = leftRabbitValue*w;
+     newPos.top = topRabbitValue*h;
      $("#rabbitGame").offset(newPos);
      ok = 1;
    }
   else
    {
-     var auxiliarVariable = $("#nou"+currentQuestion).offset();
-     newPos.left = auxiliarVariable.left;
-     newPos.top = auxiliarVariable.top;
+     var auxiliarVariable = $( "#" + currentQuestion ).offset();
+     newPos.left = auxiliarVariable.left+maximLeft;
+     newPos.top = auxiliarVariable.top-maximTop;
      $("#rabbitGame").offset(newPos);
    }
 }
@@ -144,22 +146,26 @@ $("#startButton").on('click',function(e)
 {
   $("#mesaj").css("visibility", "hidden");
 });
+
 function displayImagesAndQuestions()
 {
      var output="";
      var aux;
      for(var j = 0 ; j< questions.length; j++)
-         output+='<div  class="question" id="'+( + j )+'"> <div class="images"></div><div id="t' + j + '" class="tableQuestions"><div class ="nou" id="nou'+j +'">' + questions[j].question + '<input class="textBox" type="text" class="inputStyle" id="input' + j + '" name="answer"></input></div></div></div>';
+         output+='<div class="question" id="'+( + j )+'"> <div class="images"/><div id="t' + j + '" class="tableQuestions"><div id="nou">' 
+         + questions[j].question + '<input class="textBox" type="text" class="inputStyle" id="input' + j + '" name="answer"/></div></div></div>';
      return output;
 }
+// <div class="images"><img class="img-responsive" type="image" id="imageCarrot" src="images/carrot.png"></div>
+
 function setQuestionsPositions()
   { var w = window.innerWidth;
     var h = window.innerHeight;
     for(var j = 0; j<questions.length; j++)
         {
           newPos = new Object();
-          newPos.left = questions[j].leftValue*w/100;
-          newPos.top = questions[j].topValue*h/100;
+          newPos.left = questions[j].leftValue*w;
+          newPos.top = questions[j].topValue*h;
           $("#"+ j ).offset(newPos);
         }
   }
@@ -171,19 +177,17 @@ $(".question").on('click',function(e)
        $("#mesaj").removeClass("warning");
        $("#mesaj").html("");
        previousQuestion = currentQuestion;
-         var aux =$("#input"+previousQuestion).val();
-       if (aux.length > 0 || ok2 == 1)
-       {
+
+       if ($("#input"+currentQuestion).val()!=0)
        choice(previousQuestion);
-       ok2=0;
-      }
+
        currentQuestion = $(this).attr('id');
        $("#t"+previousQuestion).css('background','#F5A9F2');
        $("#t"+currentQuestion).css('background','red');
 
-       var auxiliarVariable = $("#nou" + currentQuestion).offset();
+       var auxiliarVariable = $("#"+currentQuestion).offset();
        newPos= new Object();
-       newPos.left = auxiliarVariable.left+50;
+       newPos.left = auxiliarVariable.left+maximLeft;
        newPos.top = auxiliarVariable.top-maximTop;
 
        $("#t"+currentQuestion).addClass("currentQuestion");
@@ -192,55 +196,22 @@ $(".question").on('click',function(e)
        if (isVisible == true )
       	  $('#input'+previousQuestion).val('');
 
-       if (isVisible == true && currentQuestion != previousQuestion )
+       if (isVisible == true && currentQuestion != previousQuestion)
                 $("#t" + previousQuestion).removeClass("currentQuestion");
 
        $('#rabbitGame').animate({
             top: newPos.top,left:newPos.left},250);
-  }
-  );
+  });
 
+$("body").on('click',function (e) 
+{
+});
 $(".question").keydown(function (e) 
   {
-     ok2=0;
      code = e.keyCode || e.which;
      idQuestion = $(this).attr('id');
          if (code == 13)
-            { ok2 = 1;
-              //previousQuestion = currentQuestion;
-                var w = window.innerWidth;
-       var h = window.innerHeight;
-       $("#mesaj").removeClass("warning");
-       $("#mesaj").html("");
-       previousQuestion = currentQuestion;
-         var aux =$("#input"+previousQuestion).val();
-       if (aux.length > 0 || ok2 == 1)
-       {
-       choice(previousQuestion);
-       ok2=0;
-      }
-       currentQuestion = $(this).attr('id');
-       $("#t"+previousQuestion).css('background','#F5A9F2');
-       $("#t"+currentQuestion).css('background','red');
-
-       var auxiliarVariable = $("#nou" + currentQuestion).offset();
-       newPos= new Object();
-       newPos.left = auxiliarVariable.left+50;
-       newPos.top = auxiliarVariable.top-maximTop;
-
-       $("#t"+currentQuestion).addClass("currentQuestion");
-       var isVisible = $('#' + previousQuestion).is(':visible');
-
-       if (isVisible == true )
-          $('#input'+previousQuestion).val('');
-
-       if (isVisible == true && currentQuestion != previousQuestion )
-                $("#t" + previousQuestion).removeClass("currentQuestion");
-
-       $('#rabbitGame').animate({
-            top: newPos.top,left:newPos.left},250);    
-
-            }
+     choice(idQuestion);
     
   });
 
