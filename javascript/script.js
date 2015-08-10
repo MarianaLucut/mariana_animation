@@ -1,12 +1,12 @@
 var questions = [{
     question:"1)3*4= ",
     answer:12,
-    topValue:13,
-    leftValue:15
+    topValue:16,
+    leftValue:23
   }, {
     question:"2)2+3= ",
     answer:"5",
-    topValue:30,
+    topValue:35,
     leftValue:30
 },{
   question:"3)10-3= ",
@@ -22,7 +22,7 @@ var questions = [{
   question:"5)10+8= ",
   answer:18,
     topValue:50,
-    leftValue:40
+    leftValue:10
     },{
   question:"6)8+7 = ",
   answer:15,
@@ -36,7 +36,7 @@ var questions = [{
     },{
   question:"8)21:3= ",
   answer:7,
-    topValue:40,
+    topValue:30,
     leftValue:80
   },{
   question:"9)23-7= ",
@@ -53,9 +53,6 @@ var questions = [{
 var currentQuestion =0;
 var previousQuestion= 0;
 
-
-var win = window.innerWidth;
-var hin = window.innerHeight;
 var topRabbitValue = 25;
 var leftRabbitValue = 80;
 var ok=0;
@@ -64,24 +61,61 @@ var maximTop;
 var anotherQuestion= 0;
 var code;
  var idQuestion;
- var ok2;
-
+ var enterWasPressed;
+var w = window.innerWidth;
+var h = window.innerHeight;
+var remainQuestions = questions.length;
 
 (function()
 {
 var listOfQuestions= displayImagesAndQuestions();
-$('body').append(listOfQuestions);
-var remainQuestions = questions.length;
+$('#content').append(listOfQuestions);
+
 setQuestionsPositions();
 displayStartMessage();
 displayImage();
 displayPageElements();
-var w = window.innerWidth;
-var h = window.innerHeight;
-$(window).on('resize',displayPageElements);
+$(window).resize(function(){
+ w = window.innerWidth;
+ h = window.innerHeight;
+});
 
-function displayPageElements()
-{   if ($(window).width()> 1500)
+$("#startButton").on('click',function(e)
+  {
+    $("#mesaj").css("visibility", "hidden");
+  });
+
+$(".question").on('click',function(e)
+  {    
+       previousQuestion = currentQuestion;
+       currentQuestion = $(this).attr('id');
+       setTheQuestions(previousQuestion,currentQuestion);
+       setMaximPositions();
+       var auxiliarVariable = $("#nou"+ currentQuestion).offset();
+ $('#rabbitGame').animate({
+            top: auxiliarVariable.top-maximTop,left:auxiliarVariable.left+maximLeft},250);  
+  });
+
+$(".question").keydown(function (e) 
+  {
+     enterWasPressed=0;
+     code = e.keyCode || e.which;
+     idQuestion = $(this).attr('id');
+     if (code == 13)
+        {  enterWasPressed= 1;
+          previousQuestion = currentQuestion;
+          currentQuestion = $(this).attr('id');
+          setTheQuestions(previousQuestion,currentQuestion);
+        }  
+  });
+})();
+
+//functions 
+
+function setMaximPositions()
+{
+
+   if ($(window).width()> 1500)
       {
           maximLeft = 140;
           maximTop = -10;
@@ -96,19 +130,21 @@ function displayPageElements()
           maximLeft = 50;
           maximTop=40;
        }
+}
+function displayPageElements()
+{  
     setRabbitPosition();
     setQuestionsPositions();
+    setMaximPositions();
     $('.images').css('width',($(window).width()*0.3)+'px');
-    $('#rabbitGame').css('width',($(window).width()/1.5*0.07)+'px');
     $('.tableQuestions').css('width',($(window).width()*0.07)+'px');
  }
 
 function displayImage()
   {
-     var im='<img  id="rabbitGame" src="images/bunny.png">';
-  	 $("#imagesDiv").append(im);
+     var im='<img class="img-responsive" id="rabbitGame" src="images/bunny.png">';
+     $("#content").append(im);
   }
-
 function setRabbitPosition()
 { 
   var w = window.innerWidth;
@@ -140,21 +176,16 @@ function displayStartMessage()
   $("#mesaj").append(output);
  }
 
-$("#startButton").on('click',function(e)
-{
-  $("#mesaj").css("visibility", "hidden");
-});
-function displayImagesAndQuestions()
+ function displayImagesAndQuestions()
 {
      var output="";
      var aux;
      for(var j = 0 ; j< questions.length; j++)
-         output+='<div  class="question" id="'+( + j )+'"> <div class="images"></div><div id="t' + j + '" class="tableQuestions"><div class ="nou" id="nou'+j +'">' + questions[j].question + '<input class="textBox" type="text" class="inputStyle" id="input' + j + '" name="answer"></input></div></div></div>';
+         output+='<div  class="question img-responsive" id="'+( + j )+'"> <div class="images"></div><div id="t' + j + '" class="tableQuestions"><div class ="nou" id="nou'+j +'">' + questions[j].question + '<input class="textBox" type="text" class="inputStyle" id="input' + j + '" name="answer"></input></div></div></div>';
      return output;
 }
 function setQuestionsPositions()
-  { var w = window.innerWidth;
-    var h = window.innerHeight;
+  { 
     for(var j = 0; j<questions.length; j++)
         {
           newPos = new Object();
@@ -164,69 +195,22 @@ function setQuestionsPositions()
         }
   }
 
-$(".question").on('click',function(e)
-  {    
-       var w = window.innerWidth;
+  function setTheQuestions(previousQuestion,currentQuestion)
+{
+        var w = window.innerWidth;
        var h = window.innerHeight;
        $("#mesaj").removeClass("warning");
        $("#mesaj").html("");
-       previousQuestion = currentQuestion;
+       
          var aux =$("#input"+previousQuestion).val();
-       if (aux.length > 0 || ok2 == 1)
+       if (aux.length > 0 )
        {
        choice(previousQuestion);
-       ok2=0;
+       enterWasPressed = 0;
       }
-       currentQuestion = $(this).attr('id');
+      
        $("#t"+previousQuestion).css('background','#F5A9F2');
        $("#t"+currentQuestion).css('background','red');
-
-       var auxiliarVariable = $("#nou" + currentQuestion).offset();
-       newPos= new Object();
-       newPos.left = auxiliarVariable.left+50;
-       newPos.top = auxiliarVariable.top-maximTop;
-
-       $("#t"+currentQuestion).addClass("currentQuestion");
-       var isVisible = $('#' + previousQuestion).is(':visible');
-
-       if (isVisible == true )
-      	  $('#input'+previousQuestion).val('');
-
-       if (isVisible == true && currentQuestion != previousQuestion )
-                $("#t" + previousQuestion).removeClass("currentQuestion");
-
-       $('#rabbitGame').animate({
-            top: newPos.top,left:newPos.left},250);
-  }
-  );
-
-$(".question").keydown(function (e) 
-  {
-     ok2=0;
-     code = e.keyCode || e.which;
-     idQuestion = $(this).attr('id');
-         if (code == 13)
-            { ok2 = 1;
-              //previousQuestion = currentQuestion;
-                var w = window.innerWidth;
-       var h = window.innerHeight;
-       $("#mesaj").removeClass("warning");
-       $("#mesaj").html("");
-       previousQuestion = currentQuestion;
-         var aux =$("#input"+previousQuestion).val();
-       if (aux.length > 0 || ok2 == 1)
-       {
-       choice(previousQuestion);
-       ok2=0;
-      }
-       currentQuestion = $(this).attr('id');
-       $("#t"+previousQuestion).css('background','#F5A9F2');
-       $("#t"+currentQuestion).css('background','red');
-
-       var auxiliarVariable = $("#nou" + currentQuestion).offset();
-       newPos= new Object();
-       newPos.left = auxiliarVariable.left+50;
-       newPos.top = auxiliarVariable.top-maximTop;
 
        $("#t"+currentQuestion).addClass("currentQuestion");
        var isVisible = $('#' + previousQuestion).is(':visible');
@@ -237,12 +221,8 @@ $(".question").keydown(function (e)
        if (isVisible == true && currentQuestion != previousQuestion )
                 $("#t" + previousQuestion).removeClass("currentQuestion");
 
-       $('#rabbitGame').animate({
-            top: newPos.top,left:newPos.left},250);    
-
-            }
-    
-  });
+      
+}
 
 function choice(idQuestion)
 { 
@@ -253,26 +233,26 @@ function choice(idQuestion)
              {  $("#mesaj").addClass("success");
                 $("#mesaj").html("   Iepurasul a mancat inca un morcov!!").show().delay(2000).fadeOut();
                 $("#"+idQuestion).css("visibility", "hidden");
+
                 remainQuestions--;
                 if(remainQuestions == 0)
                     {
                        $("#mesaj").removeClass("success").removeClass("error").addClass("warning");
-                       $("#mesaj").html("Iepurasul a mancat tot si pleaca la somn!!"+ "&#9786").css({"position": "relative", "top": "500px", "left": "500px"}).show().delay(3000).fadeOut();
+                        $("#mesaj").css("visibility", "");
+                       $("#mesaj").empty().append("Iepurasul a mancat tot si pleaca la somn!!"+ "&#9786").css({"position": "relative", "top": "500px", "left": "500px"}).show().delay(3000).fadeOut();
                        $("#rabbit").css("visibility", "hidden");
                        $("#rabbitGame").css("visibility", "hidden"); 
-                       var output ='<div id="restart"> <button  type="button"><a href = "../mariana_animation/index.html">Reincepe joc!</button></div>';
+                       var output ='<div id="restart"> <button  type="button"><a href = "index.html" >Reincepe joc!</button></div>';
                        $('body').append(output);
                        $("#restart").css("text-align","center");
                     }
               }
          else
                 {
+                   $("#mesaj").css("visibility", "");
                    $("#mesaj").removeClass("success").addClass("error");
-                   $("#mesaj").html("Raspunsul nu este corect!Mai incearca").show().delay(3000).fadeOut();
+                   $("#mesaj").empty().append("Raspunsul nu este corect!Mai incearca").show().delay(3000).fadeOut();
                    $('#input'+idQuestion).val('');
                 }
-      
-      // }
-    }
+}
 
-})();
