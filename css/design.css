@@ -107,3 +107,14 @@ html, body {
 }
 
 
+ .modal-header
+         {
+             padding:9px 15px;
+             border-bottom:1px solid #eee;
+             background-color: #0480be;
+         }
+
+  #closeButton {
+  
+    background-color: red;
+}       

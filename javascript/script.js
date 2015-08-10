@@ -68,8 +68,12 @@ var remainQuestions = questions.length;
 
 (function()
 {
+	$(".modal").modal({backdrop: false});
+// $('.modal').css({'width': '200px'});
+	$('.modal').modal('show');
 var listOfQuestions= displayImagesAndQuestions();
 $('#content').append(listOfQuestions);
+  $("#mesaj").css("visibility", "hidden");
 
 setQuestionsPositions();
 displayStartMessage();
@@ -230,7 +234,9 @@ function choice(idQuestion)
          var userAnswer = $("#input"+idQuestion).val();
 
          if (answer == userAnswer)
-             {  $("#mesaj").addClass("success");
+
+             {  $("#mesaj").css("visibility", "");
+                $("#mesaj").addClass("success");
                 $("#mesaj").html("   Iepurasul a mancat inca un morcov!!").show().delay(2000).fadeOut();
                 $("#"+idQuestion).css("visibility", "hidden");
 
