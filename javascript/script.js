@@ -65,23 +65,41 @@ var code;
 var w = window.innerWidth;
 var h = window.innerHeight;
 var remainQuestions = questions.length;
+var AVATAR_HELP_TITLE_MESSAGE = "Ajutor";
+var AVATAR_HELP_CONTENT_MESSAGE = "Raspunde la fiecare intrebare corect pentru a-l ajuta pe iepuras sa manance tot";
 
 (function()
 {
 	$(".modal").modal({backdrop: false});
-// $('.modal').css({'width': '200px'});
-	$('.modal').modal('show');
+	$("#succesModal").modal('hide');
+	$("#errorModal").modal('hide');
+	$("#endModal").modal('hide');
+	$("#startModal").modal('show');
 var listOfQuestions= displayImagesAndQuestions();
 $('#content').append(listOfQuestions);
   $("#mesaj").css("visibility", "hidden");
 
 setQuestionsPositions();
-displayStartMessage();
+
 displayImage();
 displayPageElements();
 $(window).resize(function(){
  w = window.innerWidth;
  h = window.innerHeight;
+});
+$('.imagine').on('click',hideMessages);
+
+$('body').on('click',hideMessages);
+$("#help-img").click(function()
+	{
+		showAvatarHelp("", AVATAR_HELP_CONTENT_MESSAGE, ""); 
+ 	});
+
+ $('body').on('click', '#close-btn-popover', handleCloseAvatarBtnClickEvent);
+
+$('#restartButton').on('click',function(e)
+{
+	window.location.href="index.html";
 });
 
 $("#startButton").on('click',function(e)
@@ -96,7 +114,7 @@ $(".question").on('click',function(e)
        setTheQuestions(previousQuestion,currentQuestion);
        setMaximPositions();
        var auxiliarVariable = $("#nou"+ currentQuestion).offset();
- $('#rabbitGame').animate({
+       $('#rabbitGame').animate({
             top: auxiliarVariable.top-maximTop,left:auxiliarVariable.left+maximLeft},250);  
   });
 
@@ -116,6 +134,12 @@ $(".question").keydown(function (e)
 
 //functions 
 
+function hideMessages()
+{
+$("#succesModal").modal('hide');
+$("#errorModal").modal('hide');
+
+}
 function setMaximPositions()
 {
 
@@ -149,6 +173,12 @@ function displayImage()
      var im='<img class="img-responsive" id="rabbitGame" src="images/bunny.png">';
      $("#content").append(im);
   }
+
+  function displayHelp()
+  {
+     var im='<img class="img-responsive" id="imagineHelp" src="images/help.png">';
+     $("body").append(im);
+  }
 function setRabbitPosition()
 { 
   var w = window.innerWidth;
@@ -170,15 +200,6 @@ function setRabbitPosition()
      $("#rabbitGame").offset(newPos);
    }
 }
-
-function displayStartMessage()
- {
-
-  $("#mesaj").append("Iepurasului ii este foame.Il ajuti sa manance tot?").show();
- $("#mesaj").addClass("warning");
-  var output = '<button id="startButton" type="button">OK!</button>';
-  $("#mesaj").append(output);
- }
 
  function displayImagesAndQuestions()
 {
@@ -234,31 +255,33 @@ function choice(idQuestion)
          var userAnswer = $("#input"+idQuestion).val();
 
          if (answer == userAnswer)
-
-             {  $("#mesaj").css("visibility", "");
-                $("#mesaj").addClass("success");
-                $("#mesaj").html("   Iepurasul a mancat inca un morcov!!").show().delay(2000).fadeOut();
+                {
+             
                 $("#"+idQuestion).css("visibility", "hidden");
+                $("#succesModal").modal('show').delay(2000).fadeOut();
+
 
                 remainQuestions--;
                 if(remainQuestions == 0)
                     {
-                       $("#mesaj").removeClass("success").removeClass("error").addClass("warning");
-                        $("#mesaj").css("visibility", "");
-                       $("#mesaj").empty().append("Iepurasul a mancat tot si pleaca la somn!!"+ "&#9786").css({"position": "relative", "top": "500px", "left": "500px"}).show().delay(3000).fadeOut();
+                   
+                       $("#succesModal").modal('hide');
+                       $("#endModal").modal('show').show();                    
                        $("#rabbit").css("visibility", "hidden");
                        $("#rabbitGame").css("visibility", "hidden"); 
-                       var output ='<div id="restart"> <button  type="button"><a href = "index.html" >Reincepe joc!</button></div>';
-                       $('body').append(output);
-                       $("#restart").css("text-align","center");
+                      
                     }
               }
          else
                 {
-                   $("#mesaj").css("visibility", "");
-                   $("#mesaj").removeClass("success").addClass("error");
-                   $("#mesaj").empty().append("Raspunsul nu este corect!Mai incearca").show().delay(3000).fadeOut();
+                 
                    $('#input'+idQuestion).val('');
+                     $("#errorModal").modal('show').show();
                 }
 }
 
+function handleCloseAvatarBtnClickEvent()
+{
+    // $("#avatar-audio").remove();
+    $("#avatar-content-div").empty();
+}

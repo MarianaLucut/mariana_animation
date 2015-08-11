@@ -33,8 +33,6 @@ html, body {
 {
 	width:1280px;
 	height: 900px;
-/*  min-width:1000px;
-  min-height:800px;*/
 }
 #content
 {
@@ -60,27 +58,6 @@ html, body {
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
  	float:center;
 }
-#house
-{	width: 80px;
-	height:80px;
-	position: absolute;
-	top: 0px;
-	left:50px;
-}
-#mesaj
-	 { 
-	 position: relative;
- top: 5%;
-  /*left: 50%;*/
-	 font-size :50%;
-	  font-weight: bold;
-	 border-radius: 14px;
-	 border-color: #000000;
-	 padding: 20px; 
-	 width: 8%;
-	 height: 8%;
-}
-
 
 .tableQuestions{
 	 border: 1px solid black;
@@ -106,15 +83,42 @@ html, body {
 	height:400px;
 }
 
+#imagineHelp
+{
+	top:10px;
+	left:10px;
+	width: 33px;
+    height: 56px;
+    cursor: pointer;
+    background: url(../images/butoane_app_shadow.png);
+    margin-bottom: 1px;
+}
+#startModal .modal-header
+{ background-color: #0480be;
+  color: red;
+}
 
- .modal-header
-         {
-             padding:9px 15px;
-             border-bottom:1px solid #eee;
-             background-color: #0480be;
-         }
+#startModal .modal-body
+{
+ font-family: "Comic Sans MS", Times, serif;
+ font-weight: bold;
+}
+#succesModal .modal-header
+{
+background-color: #339933;
+}   
 
-  #closeButton {
-  
-    background-color: red;
-}       
+ #errorModal .modal-header
+{
+background-color: #990000;
+color:white;
+ }           
+ #endModal .modal-header
+{ background-color: #0480be;
+  color: red;
+}
+#endModal .modal-body
+{
+ font-family: "Comic Sans MS", Times, serif;
+ font-weight: bold;
+}
