@@ -1,28 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-  <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://www.w3schools.com/w3css/w3.css">
-  <link rel="stylesheet" type="text/css" href="css/design.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  </head>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="css/design.css">
+	<link rel="stylesheet" type="text/css" href="include/css/animate.min.css">
+	<link type="text/css" rel="stylesheet" href="include/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="include/css/main.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=yes">
+<!-- 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+
+</head>
 
 <body >
-	<div class="container-fluid" id="container">
-		    <p id="mesaj">
-			  </p>
-			<br>
-		    <br>
-		<div class="row">
-		    <div id="imagesDiv" class="col-sm-4">
-			    <img class="img-responsive" id="house" src="images/house.jpg">
-			    <img class="img-responsive" id="rabbit" src="images/rabbit.jpg">
-		    </div>
-	     </div>
-		 <script type='text/javascript' src="javascript/script.js"></script>
-   </div>
+<div id="top-bar-div">
+ <div id="help-img"><img src ="images/help.png" id="imagineHelp">
+</div>
+</div>
+<div id ="content" class="container-fluid">
+ 
+	  <div id="avatar-content-div"></div>
+
+<div some-other-attributes id="startModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" data-color="red">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Start game </h4>
+      </div>
+      <div class="modal-body" >
+        <p>Selecteaza butonul de inchidere pentru a incepe jocul.Succes!</p>
+      </div>
+      <div class="modal-footer"> 
+        <button id="closeButton" style="font-weight:bold;background-color:#0480be; border-color:black; border-style: solid; border-width: 5px;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
+
+
+
+<div some-other-attributes id="succesModal" class="modal fade" role="dialog" data-backdrop="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Bravo</h4>
+      </div>
+      <div class="modal-body">
+        <p>Iepurasul a mancat inca un morcov <span align="left" style="color:green">&#10004</span></p>
+      </div>
+        <div align="right"  margin-right="20"><img class="imagine" src="images/success.png" width="20">
+
+        </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
+
+
+<div  some-other-attributes id="errorModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Mai incearca</h4>
+      
+
+      </div>
+      <div class="modal-body">
+        <p>Raspunsul nu este corect.Mai incearca! <span align="left" style="color:red">&#10006</span></p>
+      </div>
+       <div align="right"  margin-right="20"><img class="imagine" src="images/error.png" width="20">
+
+        </div>
+     
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
+
+<div some-other-attributes id="endModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" data-color="red">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Felicitari </h4>
+      </div>
+      <div class="modal-body" >
+        <p>Iepurasul a mancat toti morcovii si pleaca la somn!</p>
+      </div>
+      <div class="modal-footer"> 
+        <button id="restartButton" style="font-weight:bold;background-color:#0480be; border-color:black; border-style: solid; border-width: 5px;" type="button" class="btn btn-default" data-dismiss="modal">Reincepe joc</button>
+       
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
+
+		<script type="text/javascript" src="include/js/jquery.min.js"></script>
+		<script type="text/javascript" src="include/js/jquery-ui.min.js"></script>
+		<!-- Touch Event Support for jQuery UI -->
+		<script type="text/javascript" src="include/js/jquery.ui.touch-punch.min.js"></script>
+		<script type="text/javascript" src="include/js/bootstrap.min.js"></script>
+		<!-- End External Scripts -->
+	
+		<script type="text/javascript" src="javascript/script.js"></script>
+	    <script type="text/javascript" src="include/js/main.js"></script>
+		<script type="text/javascript" src="include/js/trompi.js"></script>
+
+
 </body>
 </html>
+
+
