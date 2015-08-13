@@ -1,61 +1,112 @@
 var questions = [{
-    question:"1)3*4= ",
+    question:"3*4= ",
     answer:12,
     topValue:16,
     leftValue:23
   }, {
-    question:"2)2+3= ",
+    question:"2+3= ",
     answer:"5",
     topValue:35,
     leftValue:30
 },{
-  question:"3)10-3= ",
+  question:"10-3= ",
   answer:7,
     topValue:25,
     leftValue:50
     },{
-  question:"4)20-7= ",
+  question:"20-7= ",
   answer:13,
     topValue:70,
     leftValue:50
     },{
-  question:"5)10+8= ",
+  question:"10+8= ",
   answer:18,
     topValue:50,
     leftValue:10
     },{
-  question:"6)8+7 = ",
+  question:"8+7 = ",
   answer:15,
     topValue:60,
     leftValue:80
     },{
-  question:"7)5*4= ",
+  question:"5*4= ",
   answer:20,
     topValue:15,
     leftValue:70
     },{
-  question:"8)21:3= ",
+  question:"21:3= ",
   answer:7,
     topValue:30,
     leftValue:80
   },{
-  question:"9)23-7= ",
+  question:"23-7= ",
   answer:16,
     topValue:60,
     leftValue:20
     },{
-  question:"10)4*8= ",
+  question:"4*8= ",
   answer:32,
     topValue:50,
     leftValue:60
+    },{
+  question:"5*5= ",
+  answer:25,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"7*8= ",
+  answer:56,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"4*6= ",
+  answer:24,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"19+3= ",
+  answer:22,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"32-9= ",
+  answer:23,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"24+8= ",
+  answer:32,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"7+19= ",
+  answer:26,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"5+28= ",
+  answer:33,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"21*2= ",
+  answer:42,
+    topValue:0,
+    leftValue:0
+    },{
+  question:"53-12= ",
+  answer:41,
+    topValue:0,
+    leftValue:0
   }];
 
 var currentQuestion =0;
 var previousQuestion= 0;
-
+var vector =[0,0,0,0,0,0,0,0,0,0];
 var topRabbitValue = 25;
 var leftRabbitValue = 80;
 var ok=0;
+var helpOk = 0;
 var maximLeft;
 var maximTop;
 var anotherQuestion= 0;
@@ -75,27 +126,35 @@ var AVATAR_HELP_CONTENT_MESSAGE = "Raspunde la fiecare intrebare corect pentru a
 	$("#errorModal").modal('hide');
 	$("#endModal").modal('hide');
 	$("#startModal").modal('show');
+	$("#helpModal").modal('hide');
+	  $('[data-toggle="tooltip"]').tooltip();
 var listOfQuestions= displayImagesAndQuestions();
-$('#content').append(listOfQuestions);
+$('#content-div').append(listOfQuestions);
   $("#mesaj").css("visibility", "hidden");
 
 setQuestionsPositions();
 
 displayImage();
 displayPageElements();
-$(window).resize(function(){
- w = window.innerWidth;
- h = window.innerHeight;
+
+$(window).resize(function() 
+{  w = window.innerWidth;
+   h = window.innerHeight;
+   setQuestionsPositions();
+   displayPageElements();
 });
+
 $('.imagine').on('click',hideMessages);
+$('#content-div').on('click',hideHelp);
 
 $('body').on('click',hideMessages);
-$("#help-img").click(function()
-	{
-		showAvatarHelp("", AVATAR_HELP_CONTENT_MESSAGE, ""); 
- 	});
+$("#imagineHelp").on('click',function(e)
+{ 
+    $("#helpModal").modal('show');
+	helpOk = 1;
 
- $('body').on('click', '#close-btn-popover', handleCloseAvatarBtnClickEvent);
+});
+
 
 $('#restartButton').on('click',function(e)
 {
@@ -136,9 +195,14 @@ $(".question").keydown(function (e)
 
 function hideMessages()
 {
-$("#succesModal").modal('hide');
-$("#errorModal").modal('hide');
+	$("#succesModal").modal('hide');
+	$("#errorModal").modal('hide');
+}
 
+function hideHelp()
+{
+	 // $("#avatar-content-div").empty();
+	 	$("#helpModal").modal('hide');
 }
 function setMaximPositions()
 {
@@ -171,7 +235,7 @@ function displayPageElements()
 function displayImage()
   {
      var im='<img class="img-responsive" id="rabbitGame" src="images/bunny.png">';
-     $("#content").append(im);
+     $("#content-div").append(im);
   }
 
   function displayHelp()
@@ -205,8 +269,26 @@ function setRabbitPosition()
 {
      var output="";
      var aux;
-     for(var j = 0 ; j< questions.length; j++)
-         output+='<div  class="question img-responsive" id="'+( + j )+'"> <div class="images"></div><div id="t' + j + '" class="tableQuestions"><div class ="nou" id="nou'+j +'">' + questions[j].question + '<input class="textBox" type="text" class="inputStyle" id="input' + j + '" name="answer"></input></div></div></div>';
+     var lungime = questions.length;
+   
+     for(var j = 0 ; j< vector.length; j++)
+     { 
+        while(vector[j] == 0)
+        {
+	        var random = Math.floor((Math.random() *lungime )+ 1);
+	     	var ok =0;
+	     	for (var i =0;i< vector.length; i++) 
+	     	  if(vector[i] == random)
+	     	 	   ok =1;
+
+	     	if (ok == 0) 
+	     	  vector[j] = random;
+
+        }
+
+        
+        output+='<div  class="question " id="'+( + j )+'"> <div class="images"></div><div id="t' + j + '" class="tableQuestions"><div class ="nou" id="nou'+j +'">' +(j+1)+")"+ questions[random-1].question + '<input class="textBox" type="text" class="inputStyle" id="input' + j + '" name="answer"></input></div></div></div>';
+     }
      return output;
 }
 function setQuestionsPositions()
@@ -250,13 +332,18 @@ function setQuestionsPositions()
 }
 
 function choice(idQuestion)
-{ 
-         var answer = questions[idQuestion].answer;
+{          var aux =vector[idQuestion]-1;
+         var answer = questions[aux].answer;
          var userAnswer = $("#input"+idQuestion).val();
 
          if (answer == userAnswer)
                 {
-             
+                	var output = $("#usr").val();
+                if (output.length>0)
+                  $("#myDialogText").text("Bravo,"+ output+" .Iepurasul a mancat incat un morcov");
+                else 
+                  $("#myDialogText").text("Iepurasul a mancat incat un morcov.");
+
                 $("#"+idQuestion).css("visibility", "hidden");
                 $("#succesModal").modal('show').delay(2000).fadeOut();
 
@@ -282,6 +369,7 @@ function choice(idQuestion)
 
 function handleCloseAvatarBtnClickEvent()
 {
-    // $("#avatar-audio").remove();
+
     $("#avatar-content-div").empty();
 }
+

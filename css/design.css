@@ -1,6 +1,7 @@
 .question 
 { 	position: absolute;
   	font-size:60%;
+  	 font-weight: bold;
 }
 .images
 {
@@ -29,12 +30,8 @@ html, body {
     padding: 0;
     overflow:hidden;
 }
-#content
-{
-	width:1280px;
-	height: 900px;
-}
-#content
+
+#content-div
 {
 	position: relative;
     -webkit-transform-origin: top left;
@@ -122,3 +119,13 @@ color:white;
  font-family: "Comic Sans MS", Times, serif;
  font-weight: bold;
 }
+
+#helpModal .modal-body
+{
+ font-family: "Comic Sans MS", Times, serif;
+ font-weight: bold;
+}
+#helpModal .modal-header
+{
+background-color: #E6CC80;
+} 
